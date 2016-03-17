@@ -1,0 +1,261 @@
+{
+  "serverPort" : 8080,
+  "hostName" : "localhost",
+  "defaultLoginPage" : "/backend/login.html",
+  "routerDefinitions" : {
+    "routerDefinitions" : [ {
+      "name" : "CookieController",
+      "active" : true,
+      "routes" : null,
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.impl.CookieController",
+      "httpMethod" : null,
+      "handlerProperties" : { },
+      "captureCollection" : null
+    }, {
+      "name" : "SessionController",
+      "active" : true,
+      "routes" : null,
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.impl.SessionController",
+      "httpMethod" : null,
+      "handlerProperties" : {
+        "expiration" : "30 m",
+        "sessionStore" : "LOCAL_SESSION_STORE"
+      },
+      "captureCollection" : null
+    }, {
+      "name" : "TimeoutController",
+      "active" : true,
+      "routes" : null,
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.impl.TimeoutController",
+      "httpMethod" : null,
+      "handlerProperties" : {
+        "timeout" : "30000"
+      },
+      "captureCollection" : null
+    }, {
+      "name" : "BodyController",
+      "active" : true,
+      "routes" : null,
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.impl.BodyController",
+      "httpMethod" : null,
+      "handlerProperties" : { },
+      "captureCollection" : null
+    }, {
+      "name" : "PersistenceController",
+      "active" : true,
+      "routes" : [ "/persistenceController/:entity/:ID/:action/read.html" ],
+      "blocking" : true,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.impl.persistence.PersistenceController",
+      "httpMethod" : null,
+      "handlerProperties" : {
+        "uploadRelativePath" : "images/",
+        "uploadDirectory" : "webroot/images/",
+        "reroute" : "true",
+        "cleanPath" : "true"
+      },
+      "captureCollection" : [ {
+        "captureDefinitions" : [ {
+          "captureName" : "entity",
+          "controllerKey" : "mapper",
+          "required" : false
+        }, {
+          "captureName" : "ID",
+          "controllerKey" : "ID",
+          "required" : false
+        }, {
+          "captureName" : "action",
+          "controllerKey" : "action",
+          "required" : false
+        }, {
+          "captureName" : "selectionSize",
+          "controllerKey" : "selectionSize",
+          "required" : false
+        }, {
+          "captureName" : "selectionStart",
+          "controllerKey" : "selectionStart",
+          "required" : false
+        }, {
+          "captureName" : "orderBy",
+          "controllerKey" : "orderBy",
+          "required" : false
+        } ]
+      } ]
+    }, {
+      "name" : "MailController",
+      "active" : true,
+      "routes" : [ "/api/sendmail" ],
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.impl.api.MailController",
+      "httpMethod" : null,
+      "handlerProperties" : {
+        "templateDirectory" : "templates",
+        "inline" : "true",
+        "mode" : "XHTML",
+        "cacheEnabled" : "true",
+        "from" : "address@sender.com"
+      },
+      "captureCollection" : null
+    }, {
+      "name" : "StaticController",
+      "active" : true,
+      "routes" : [ "/static/*", "/favicon.ico" ],
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.impl.StaticController",
+      "httpMethod" : null,
+      "handlerProperties" : {
+        "cacheEnabled" : "true"
+      },
+      "captureCollection" : null
+    }, {
+      "name" : "AuthenticationController",
+      "active" : true,
+      "routes" : [ "/member/*" ],
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.impl.authentication.AuthenticationController",
+      "httpMethod" : null,
+      "handlerProperties" : {
+        "loginAction" : "/member/login",
+        "logoutAction" : "/member/logout",
+        "passwordField" : "password",
+        "collectionName" : "usertable",
+        "loginPage" : "/member/login",
+        "authProvider" : "MongoAuth",
+        "roleField" : "roles",
+        "usernameField" : "username",
+        "logoutDestinationPage" : "/index.html"
+      },
+      "captureCollection" : null
+    }, {
+      "name" : "RegisterController",
+      "active" : true,
+      "routes" : [ "/customer/doRegister", "/customer/verifyRegistration" ],
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.impl.authentication.RegisterController",
+      "httpMethod" : null,
+      "handlerProperties" : {
+        "regStartFailUrl" : "/customer/registerFail.html",
+        "allowDuplicateEmail" : "false",
+        "regStartSuccessUrl" : "/customer/registerSuccess.html",
+        "passwordField" : "password",
+        "collectionName" : "Member",
+        "authProvider" : "MongoAuth",
+        "regConfirmSuccessUrl" : "/customer/registerConfirmSuccess.html",
+        "usernameField" : "email",
+        "authenticatableClass" : "de.braintags.netrelay.model.Member",
+        "regConfirmFailUrl" : "/customer/registerConfirmFail.html"
+      },
+      "captureCollection" : null
+    }, {
+      "name" : "PasswordLostController",
+      "active" : true,
+      "routes" : [ "/customer/passwordLost", "/customer/passwordReset" ],
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.impl.authentication.PasswordLostController",
+      "httpMethod" : null,
+      "handlerProperties" : {
+        "pwLostSuccessUrl" : "/customer/passwordLostSuccess.html",
+        "pwLostFailUrl" : "/customer/passwordLostFail.html",
+        "emailFieldName" : "email",
+        "pwResetFailUrl" : "/customer/passwordResetFail.html",
+        "pwResetSuccessUrl" : "/customer/passwordResetSuccess.html",
+        "authenticatableClass" : "de.braintags.netrelay.model.Member"
+      },
+      "captureCollection" : null
+    }, {
+      "name" : "CurrentMemberController",
+      "active" : true,
+      "routes" : [ ],
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.impl.CurrentMemberController",
+      "httpMethod" : null,
+      "handlerProperties" : { },
+      "captureCollection" : null
+    }, {
+      "name" : "ThymeleafTemplateController",
+      "active" : true,
+      "routes" : [ "/*" ],
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.impl.ThymeleafTemplateController",
+      "httpMethod" : null,
+      "handlerProperties" : {
+        "templateDirectory" : "templates",
+        "mode" : "XHTML",
+        "contentType" : "text/html",
+        "cacheEnabled" : "true"
+      },
+      "captureCollection" : null
+    }, {
+      "name" : "FailureController",
+      "active" : true,
+      "routes" : null,
+      "blocking" : false,
+      "failureDefinition" : true,
+      "controller" : "de.braintags.netrelay.controller.impl.FailureController",
+      "httpMethod" : null,
+      "handlerProperties" : { },
+      "captureCollection" : null
+    } ]
+  },
+  "processorDefinitons" : {
+    "processorDefinitions" : [ {
+      "cancelOnError" : false,
+      "timeDef" : "60000",
+      "name" : "dummyprocessor",
+      "active" : false,
+      "processorClass" : null,
+      "processorProperties" : {
+        "demoKey" : "demoValue"
+      }
+    } ]
+  },
+  "datastoreSettings" : {
+    "datastoreInit" : "de.braintags.io.vertx.pojomapper.mongo.init.MongoDataStoreInit",
+    "properties" : {
+      "startMongoLocal" : "false",
+      "handleReferencedRecursive" : "true",
+      "localPort" : "27018",
+      "connection_string" : "mongodb://localhost:27017",
+      "shared" : "false"
+    },
+    "databaseName" : "testdatabase"
+  },
+  "edited" : false,
+  "mappingDefinitions" : {
+    "mapperMap" : { }
+  },
+  "mailClientSettings" : {
+    "hostname" : "localhost",
+    "port" : 25,
+    "starttls" : "OPTIONAL",
+    "login" : "NONE",
+    "authMethods" : null,
+    "username" : null,
+    "password" : null,
+    "ssl" : false,
+    "trustAll" : false,
+    "keyStore" : null,
+    "keyStorePassword" : null,
+    "ownHostname" : null,
+    "maxPoolSize" : 10,
+    "keepAlive" : true,
+    "allowRcptErrors" : false,
+    "active" : false,
+    "name" : "NetRelay MailClient"
+  }
+}

@@ -2,4 +2,4 @@
 An example project based on NetRelay
 
 
-NOT YET FINISHED, WILL COME SOON
+WILL COME SOON
