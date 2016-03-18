@@ -4,12 +4,12 @@
   "edited" : true,
   "defaultLoginPage" : "/backend/login.html",
   "datastoreSettings" : {
-    "datastoreInit" : "de.braintags.io.vertx.pojomapper.mongo.init.MongoDataStoreInit",
+    "datastoreInit" : "de.braintags.io.vertx.pojomapper.mysql.init.MySqlDataStoreinit",
     "properties" : {
-      "startMongoLocal" : "false",
-      "handleReferencedRecursive" : "true",
-      "localPort" : "27018",
-      "connection_string" : "mongodb://localhost:27017",
+      "host" : "localhost",
+      "port" : "3306",
+      "username" : "root",
+      "password" : "qdmaha3t",
       "shared" : "false"
     },
     "databaseName" : "fairytale"
@@ -127,47 +127,6 @@
       "httpMethod" : null,
       "handlerProperties" : {
         "cacheEnabled" : "true"
-      },
-      "captureCollection" : null
-    }, {
-      "name" : "AuthenticationController",
-      "active" : true,
-      "routes" : [ "/member/*" ],
-      "blocking" : false,
-      "failureDefinition" : false,
-      "controller" : "de.braintags.netrelay.controller.impl.authentication.AuthenticationController",
-      "httpMethod" : null,
-      "handlerProperties" : {
-        "loginAction" : "/member/login",
-        "logoutAction" : "/member/logout",
-        "passwordField" : "password",
-        "collectionName" : "usertable",
-        "loginPage" : "/member/login",
-        "authProvider" : "MongoAuth",
-        "roleField" : "roles",
-        "usernameField" : "username",
-        "logoutDestinationPage" : "/index.html"
-      },
-      "captureCollection" : null
-    }, {
-      "name" : "RegisterController",
-      "active" : true,
-      "routes" : [ "/customer/doRegister", "/customer/verifyRegistration" ],
-      "blocking" : false,
-      "failureDefinition" : false,
-      "controller" : "de.braintags.netrelay.controller.impl.authentication.RegisterController",
-      "httpMethod" : null,
-      "handlerProperties" : {
-        "regStartFailUrl" : "/customer/registerFail.html",
-        "allowDuplicateEmail" : "false",
-        "regStartSuccessUrl" : "/customer/registerSuccess.html",
-        "passwordField" : "password",
-        "collectionName" : "Member",
-        "authProvider" : "MongoAuth",
-        "regConfirmSuccessUrl" : "/customer/registerConfirmSuccess.html",
-        "usernameField" : "email",
-        "authenticatableClass" : "de.braintags.netrelay.model.Member",
-        "regConfirmFailUrl" : "/customer/registerConfirmFail.html"
       },
       "captureCollection" : null
     }, {
