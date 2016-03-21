@@ -198,6 +198,18 @@
       "handlerProperties" : { },
       "captureCollection" : null
     }, {
+      "name" : "HelloWorld",
+      "active" : true,
+      "routes" : [ "/helloWorld.html"],
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.fairytale.controller.HelloWorldController",
+      "httpMethod" : null,
+      "handlerProperties" : {
+        "helloProperty" : "myProperty"
+      },
+      "captureCollection" : null
+    }, {
       "name" : "ThymeleafTemplateController",
       "active" : true,
       "routes" : [ "/*" ],
@@ -256,6 +268,8 @@
     "name" : "NetRelay MailClient"
   },
   "mappingDefinitions" : {
-    "mapperMap" : { }
+    "mapperMap" : {      
+      "Member" : "de.braintags.netrelay.model.Member"
+    }
   }
 }

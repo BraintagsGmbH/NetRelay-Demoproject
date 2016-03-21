@@ -18,7 +18,7 @@ public class Main extends AbstractVerticle {
   @Override
   public void start(Future<Void> startFuture) throws Exception {
     String settingsPath = "src/main/resources/";
-    String settingsFile = settingsPath + "fairytale-settingsMySql.json";
+    String settingsFile = settingsPath + "fairytale-settings.json";
     DeploymentOptions options = new DeploymentOptions();
     options.setConfig(new JsonObject().put(Settings.SETTINGS_LOCATION_PROPERTY, settingsFile));
 
