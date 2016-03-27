@@ -2,7 +2,7 @@ package de.braintags.netrelay.fairytale.controller;
 
 import java.util.Properties;
 
-import de.braintags.netrelay.controller.impl.AbstractController;
+import de.braintags.netrelay.controller.AbstractController;
 import io.vertx.ext.web.RoutingContext;
 
 /**
@@ -40,7 +40,7 @@ public class HelloWorldController extends AbstractController {
   /*
    * (non-Javadoc)
    * 
-   * @see de.braintags.netrelay.controller.impl.AbstractController#initProperties(java.util.Properties)
+   * @see de.braintags.netrelay.controller.AbstractController#initProperties(java.util.Properties)
    */
   @Override
   public void initProperties(Properties properties) {
