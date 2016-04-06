@@ -1,0 +1,10 @@
+{
+  "edited" : true,
+  "keyGeneratorClass" : "de.braintags.io.vertx.keygenerator.impl.MongoKeyGenerator",
+  "generatorProperties" : {
+    "db_name" : "KeygeneratoDb",
+    "startMongoLocal" : "false",
+    "connection_string" : "mongodb://localhost:27017",
+    "shared" : "false"
+  }
+}

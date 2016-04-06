@@ -5,10 +5,12 @@ import de.braintags.io.vertx.keygenerator.KeyGeneratorVerticle;
 import de.braintags.netrelay.NetRelay;
 import de.braintags.netrelay.init.Settings;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Context;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
+import io.vertx.docgen.Source;
 
 /**
  * 
@@ -16,12 +18,14 @@ import io.vertx.core.json.JsonObject;
  * 
  */
 
+@Source(translate = false)
 public class MainWithKeyGenerator extends AbstractVerticle {
-  private static final io.vertx.core.logging.Logger LOGGER = io.vertx.core.logging.LoggerFactory.getLogger(MainWithKeyGenerator.class);
+  private static final io.vertx.core.logging.Logger LOGGER = io.vertx.core.logging.LoggerFactory
+      .getLogger(MainWithKeyGenerator.class);
+  private String settingsPath;
 
   @Override
   public void start(Future<Void> startFuture) throws Exception {
-    String settingsPath = "src/main/resources/";
     String settingsFile = settingsPath + "fairytale-settings.json";
     DeploymentOptions options = new DeploymentOptions();
     options.setConfig(new JsonObject().put(Settings.SETTINGS_LOCATION_PROPERTY, settingsFile));
@@ -32,12 +36,12 @@ public class MainWithKeyGenerator extends AbstractVerticle {
         startFuture.fail(result.cause());
       } else {
         LOGGER.info(NetRelay.class.getSimpleName() + " successfully launched: " + result.result());
-        // initKeyGeneratorVerticle(vertx, settingsPath, startFuture);
+        initKeyGeneratorVerticle(vertx, settingsPath, startFuture);
       }
     });
   }
 
-  private void initKeyGeneratorVerticle(Vertx vertx, String settingsPath, Future<Void> startFuture) {
+  public void initKeyGeneratorVerticle(Vertx vertx, String settingsPath, Future<Void> startFuture) {
     DeploymentOptions options = new DeploymentOptions();
     String settingsLocation = settingsPath + "KeyGeneratorSettings.json";
     LOGGER.info("Settings for KeyGenerator: " + settingsLocation);
@@ -50,6 +54,17 @@ public class MainWithKeyGenerator extends AbstractVerticle {
         startFuture.complete();
       }
     });
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see io.vertx.core.AbstractVerticle#init(io.vertx.core.Vertx, io.vertx.core.Context)
+   */
+  @Override
+  public void init(Vertx vertx, Context context) {
+    super.init(vertx, context);
+    settingsPath = "src/main/resources/";
   }
 
 }

@@ -1,5 +1,17 @@
 # NetRelay-Demoproject
-An example project based on NetRelay
+
+ Creating a web application with NetRelay
+
+This project describes the creation of a web application based on NetRelay. You can follow the tutorial 
+and build the application from the scratch or you can use this project and start the application directly
+
+Start the tutorial 
+*link:src/docs/asciidoc/java/index.adoc[ here ]*
+
+If you are searching for basic information about NetRelay, go to 
+*link:https://github.com/BraintagsGmbH/NetRelay[ NetRelay ]*
+
+If you are searching for ready to use implementations of IController, go to 
+*link:https://github.com/BraintagsGmbH/NetRelay-Controller[ NetRelay-Controller ]*
 
 
-WILL COME SOON
