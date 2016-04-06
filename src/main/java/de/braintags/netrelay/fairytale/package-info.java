@@ -219,6 +219,8 @@
  * 
  * == Adding persistence
  * 
+ * == Rendering pdf
+ * 
  * 
  * == Creating an own controller
  * 
