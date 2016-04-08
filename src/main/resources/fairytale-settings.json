@@ -50,6 +50,28 @@
       },
       "captureCollection" : null
     }, {
+      "name" : "AuthenticationController",
+      "routes" : [ 
+      				"/member/*"      				      		
+      			 ],
+      "blocking" : false,
+      "failureDefinition" : false,
+      "controller" : "de.braintags.netrelay.controller.authentication.AuthenticationController",
+      "httpMethod" : null,
+      "handlerProperties" : {
+        "loginPage" : "/login.html",
+        "logoutAction" : "/logout",
+        "logoutDestinationPage": "/login.html",
+        "directLoggedInOKURL": "/index.html",
+        "roleField" : "roles",
+        "collectionName" : "Member",
+        "loginAction" : "/login",
+        "passwordField" : "password",
+        "usernameField" : "userName",
+        "authProvider" : "MongoAuth"
+      },
+      "captureCollection" : null
+    }, {
       "name" : "TimeoutController",
       "controller" : "de.braintags.netrelay.controller.TimeoutController",
       "active" : true,

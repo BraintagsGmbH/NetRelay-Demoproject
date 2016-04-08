@@ -220,6 +220,8 @@
  * 
  * == Adding protected areas
  * Lets say, that inside the project exists an area, where a user can edit his own data, like his name, password etc.
+ * Thus we need the typical possiblities of member registration ( with double opt in ), login, password forgotten which
+ * we will implement now.
  * 
  * === Adding a mapper to the configuration
  * User information shall be stored into our MongoDb. To be able to work with records from a datastore, we have to
@@ -290,36 +292,45 @@
  * when sent. Behind this url we will soon implement the check for an existing user as authentication.
  * 
  * === Adding the AuthenticationController
+ * All routes, which are covered by the AuthenticationController, are protected and require a valid login. The
+ * AuthenticationController itself displays the login form with the page we created before, when it is required. The
+ * configuration for our solution looks like that ( you must add this definition behind the SessionController ):
  * 
- * 
+ * [source, json]
+ * ----
  * {
  *   "name" : "AuthenticationController",
  *   "routes" : [
- *     "/backend/dashboard/*"
+ *     "/member/*"
  *   ],
  *   "blocking" : false,
  *   "failureDefinition" : false,
  *   "controller" : "de.braintags.netrelay.controller.authentication.AuthenticationController",
  *   "httpMethod" : null,
  *   "handlerProperties" : {
- *     "loginPage" : "/backend/login.html",
- *     "logoutAction" : "/member/logout",
- *     "logoutDestinationPage": "/backend/login.html",
- *     "directLoggedInOKURL": "/backend/dashboard/",
+ *     "loginPage" : "/login.html",
+ *     "logoutAction" : "/logout",
+ *     "logoutDestinationPage": "/index.html",
+ *     "directLoggedInOKURL": "/index.html",
  *     "roleField" : "roles",
  *     "collectionName" : "Member",
- *     "loginAction" : "/member/login",
+ *     "loginAction" : "/login",
  *     "passwordField" : "password",
  *     "usernameField" : "userName",
  *     "authProvider" : "MongoAuth"
  *   },
  *   "captureCollection" : null
  * }
+ * ----
+ * As described above, all routes of the configuration are protected areas. So if you are starting the application now
+ * and open the url link:http://localhost:8080/member/[ member ] you should see the login form with the opened page
+ * "login.html".
  * 
  * 
  * === Adding the RegisterController
  * 
  * 
+ * === Adding the PasswordLostController
  * 
  * 
  * == Adding persistence
