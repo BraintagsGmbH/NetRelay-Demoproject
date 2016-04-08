@@ -140,7 +140,7 @@
  * }
  * ----
  * 
- * -- Adding a controller to the settings
+ * == Adding a controller to the settings
  * Since our project shall process dynamic pages, we will add the ThymeleafTemplateController from the project
  * NetRelay-Controllers into the netrelay settings. Please make sure that you added the suitable dependency into the
  * build file of your project like described above.
@@ -196,24 +196,129 @@
  * (Re)Launch the application and open link:http://localhost:8080[ localhost:8080] in a browser, which should show you
  * the expected result.
  * 
+ * == Adding static contents
+ * Before we are going to implement dynamic templates, we will take care of static resources, which we will need in the
+ * later run. Add a new directory "webroot" into your project. Download the latest version of bootstrap from
+ * link:http://getbootstrap.com/getting-started/#download[ the bootstrap download site ], extract it into the webroot
+ * directory and rename the new subdirectory to "bootstrap". If you like, search or use a "favicon.ico" from the net and
+ * store it into webroot.
+ * 
+ * NOTE: At this point we are preparing some contents, which are used by the controllers StaticController and
+ * FaviconController, which are both defined by default inside the configuration of NetRelay. The bootstrap will be used
+ * in coming templates to simplify our styling live.
+ * 
+ * == Handling persistence
+ * creating a mapper and templates for free editing etc.
+ * 
+ * === add persistence controller
+ * 
+ * === insert a record
+ * 
+ * === list records
+ * 
+ * === delete records
+ * 
  * == Adding protected areas
- * Lets say, that inside the project exists an area, where a user can edit his own data, like his name, password etc. To
- * be able to work with records from a datastore, we have to make the pojo mapper known for NetRelay.
+ * Lets say, that inside the project exists an area, where a user can edit his own data, like his name, password etc.
  * 
  * === Adding a mapper to the configuration
+ * User information shall be stored into our MongoDb. To be able to work with records from a datastore, we have to
+ * make the pojo mapper known for NetRelay.
  * In our example we are using the mapper class de.braintags.netrelay.model.Member from the project NetRelay-Connectors.
  * Open the settings file of NetRelay again and location the section "mapperDefinitions", which you should find at the
  * bottom of the document. Inside the part "mapperMap" add the entry `"Member" : "de.braintags.netrelay.model.Member"`.
  * Afterwards this part should look like that:
  * 
+ * [source, json]
  * ----
  * "mappingDefinitions" : {
  *   "mapperMap" : {
  *     "Member" : "de.braintags.netrelay.model.Member"
  *   }
- * },
+ * }
  * 
  * ----
+ * 
+ * === Creating the protected area
+ * A user will be able to edit his data under the path /member/memberData.html. Therefor create a new directory and
+ * file in "templates/member/memberData.html".
+ * 
+ * === Creating the login template
+ * If a user, who is not logged in, wants to enter a restricted area, he will be redirected to a page, where he can
+ * login or create an account inside the server.
+ * Create a new file "login.html" inside the directory templates and add the following code:
+ * 
+ * [source, html]
+ * ----
+ * <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+ * 
+ * <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+ * <head>
+ *   <title>Login page</title>
+ *   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ *   <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+ * </head>
+ * <body class="general">
+ *   <div class="jumbotron">
+ *     <div class="container">
+ * <h3>Login</h3>
+ *     </div>
+ *   </div>
+ *   <div id="columns">
+ *     <div class="container">
+ *       <div class="row">
+ *         <form action="/member/login" method="POST">
+ *           <div class="form-group">
+ *             <label for="username">username</label>
+ *             <input type="text" class="form-control" id="username" name="username"
+ *               placeholder="username" required="required" />
+ *           </div>
+ *           <div class="form-group">
+ *             <label for="password">password</label> <input type="password"
+ *               class="form-control" id="password" name="password" required="required" />
+ *           </div>
+ *           <button type="submit" class="btn btn-default">login</button>
+ *         </form>
+ *       </div>
+ *     </div>
+ *   </div>
+ * </body>
+ * </html>
+ * ----
+ * 
+ * This template creates a login form with the two fields username and password, which will call the url "/member/login"
+ * when sent. Behind this url we will soon implement the check for an existing user as authentication.
+ * 
+ * === Adding the AuthenticationController
+ * 
+ * 
+ * {
+ *   "name" : "AuthenticationController",
+ *   "routes" : [
+ *     "/backend/dashboard/*"
+ *   ],
+ *   "blocking" : false,
+ *   "failureDefinition" : false,
+ *   "controller" : "de.braintags.netrelay.controller.authentication.AuthenticationController",
+ *   "httpMethod" : null,
+ *   "handlerProperties" : {
+ *     "loginPage" : "/backend/login.html",
+ *     "logoutAction" : "/member/logout",
+ *     "logoutDestinationPage": "/backend/login.html",
+ *     "directLoggedInOKURL": "/backend/dashboard/",
+ *     "roleField" : "roles",
+ *     "collectionName" : "Member",
+ *     "loginAction" : "/member/login",
+ *     "passwordField" : "password",
+ *     "usernameField" : "userName",
+ *     "authProvider" : "MongoAuth"
+ *   },
+ *   "captureCollection" : null
+ * }
+ * 
+ * 
+ * === Adding the RegisterController
+ * 
  * 
  * 
  * 
