@@ -12,12 +12,6 @@ import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.docgen.Source;
 
-/**
- * 
- * @author Michael Remme
- * 
- */
-
 @Source(translate = false)
 public class MainWithKeyGenerator extends AbstractVerticle {
   private static final io.vertx.core.logging.Logger LOGGER = io.vertx.core.logging.LoggerFactory

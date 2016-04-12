@@ -1,7 +1,31 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
- 
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>start page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
 <body>
-my index page
+	<div class="jumbotron">
+		<div class="container">
+			<h3>Fairytales start</h3>
+		</div>
+	</div>
+	<div class="container">
+		<div>
+			<a href="member/memberData.html">restricted member data</a>
+		</div>
+
+		<div>
+			<a href="registration.html">new registration</a>
+		</div>
+
+		<div>
+			<a href="/fairytale/index.html?entity=FairyTale&amp;action=DISPLAY">fairytales</a>
+		</div>
+	</div>
+
 </body>
 </html>

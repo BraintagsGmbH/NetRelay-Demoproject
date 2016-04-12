@@ -1,0 +1,37 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	th:with="fairytale=${context.get('FairyTale')}">
+<head>
+<title>edit fairytale</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+	<div class="container">
+		<h3 class="overview">Edit fairytale</h3>
+		<form method="POST" th:action="'detail.html?entity=FairyTale&amp;action=UPDATE&amp;Id='+${fairytale.id}">
+			<div class="form-group">
+				<label for="ft_id" class="control-label">ID</label> <input
+					id="ft_id" class="form-control" readonly="readonly"
+					name="FairyTale.id" th:value="${fairytale.id}" />
+			</div>
+			<div class="form-group">
+				<label for="ft_name" class="control-label">Name</label> <input
+					type="text" name="FairyTale.name" class="form-control" id="ft_name"
+					th:value="${fairytale.name}" placeholder="name" />
+			</div>
+			<div class="form-group">
+				<label for="ft_description" class="control-label">Description</label>
+				<input type="text" name="FairyTale.description" class="form-control"
+					id="ft_description" th:value="${fairytale.description}"
+					placeholder="description" />
+			</div>
+			<div class="form-group">
+				<button class="btn btn-primary pull-right" type="submit" name="SAVE">SAVE</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

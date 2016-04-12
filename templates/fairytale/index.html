@@ -1,0 +1,43 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>fairytales</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+	<div class="container">
+		<h3 class="overview">Insert new fairytale</h3>
+		<form method="POST"
+			action="detail.html?entity=FairyTale&amp;action=INSERT">
+			<div class="form-group">
+				<label for="name" class="control-label">name</label> <input
+					type="text" name="FairyTale.name" class="form-control" id="name"
+					placeholder="name" />
+			</div>
+			<div class="form-group">
+				<button class="btn btn-primary pull-right" type="submit" name="SAVE">SAVE</button>
+			</div>
+		</form>
+	</div>
+
+	<div class="container">
+		<h2 class="overview">List of fairytales</h2>
+		<table class="table table-striped table-bordered" cellspacing="0"
+			width="100%">
+			<tr th:each="ft : ${ context.get( 'FairyTale') }">
+				<td th:text="${ft.id}"></td>
+				<td th:text="${ft.name}"></td>
+				<td><a
+					th:href="'detail.html?entity=FairyTale&amp;action=DISPLAY&amp;Id='+${ft.id}">edit</a>
+				</td>
+				<td><a
+					th:href="'delete?entity=FairyTale&amp;action=DELETE&amp;Id='+${ft.id}">delete</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

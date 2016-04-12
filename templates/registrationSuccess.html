@@ -1,0 +1,25 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>registration success</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="registration">
+	<div class="jumbotron">
+		<div class="container">
+			<h3>successful registration</h3>
+		</div>
+	</div>
+	<div class="container">
+		<div>registration succeeded - we sent a confirmation message per email
+		</div>
+		<div class="hidden">
+		DEBUG: registerError = <span th:text="${context.get('registerError')}"></span><br/>
+		mailSendResult = <span th:text="${context.get('mailSendResult')}"></span>
+		</div> 		
+	</div>
+</body>
+</html>

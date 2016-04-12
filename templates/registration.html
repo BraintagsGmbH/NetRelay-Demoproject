@@ -1,0 +1,47 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>new registration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="registration">
+	<div class="jumbotron">
+		<div class="container">
+			<h3>Please enter registration data</h3>
+		</div>
+	</div>
+	<div class="container">
+		<div th:if="${context.get('registerError') != null}"	>
+			<div class="alert alert-danger"   th:text="${context.get( 'registerError')}">
+			</div>
+		</div>
+		<form id="regForm" name="regForm" class="validation regForm"
+			action="/doRegister">
+			<div class="form-group">
+				<label for="firstName" class="control-label">first name</label> <input
+					type="text" name="Member.firstName" id="firstName"
+					placeholder="first name" />
+			</div>
+			<div class="form-group">
+				<label for="lastName" class="control-label">last name</label> <input
+					type="text" name="Member.lastName" id="lastName"
+					placeholder="last name" />
+			</div>
+			<div class="form-group">
+				<label for="email" class="control-label">E-Mail*</label> <input
+					type="email" class="form-control" name="email" id="email"
+					placeholder="E-Mail" />
+			</div>
+			<div class="form-group">
+				<label for="newpassword" class="control-label">password*</label> <input
+					type="password" name="password" class="form-control" id="password"
+					placeholder="Passwort" />
+			</div>
+			<button type="submit" class="btn btn-default">register</button>
+		</form>
+	</div>
+</body>
+</html>

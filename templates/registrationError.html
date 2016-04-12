@@ -1,0 +1,23 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>registration error</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="registration">
+	<div class="jumbotron">
+		<div class="container">
+			<h3>Error in registration</h3>
+		</div>
+	</div>
+	<div class="container">
+		<div th:if="${context.get('registerError') != null}"	>
+			<div class="alert alert-danger"   th:text="${context.get( 'registerError')}">
+			</div>
+		</div>
+	</div>
+</body>
+</html>

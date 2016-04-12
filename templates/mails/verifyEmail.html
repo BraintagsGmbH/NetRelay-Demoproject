@@ -1,0 +1,16 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
+	th:with="host = 'http://'+${context.get('REQUEST_HOST')+(context.get('REQUEST_PORT')?':'+context.get('REQUEST_PORT'):'')}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	dear
+	<span th:text="${context.request().params().get('Member.firstName')}"
+		th:remove="tag"></span>
+	<span th:text="${context.request().params().get('Member.lastName')}"
+		th:remove="tag"></span>, the confirmation link:
+	<a th:href="${host}+'/verifyRegistration?validationId='+${context.get('validationId')}"
+		target="_blank">FINISH REGISTRATION</a>
+</body>
+</html>
