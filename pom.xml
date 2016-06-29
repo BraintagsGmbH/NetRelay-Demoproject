@@ -11,12 +11,12 @@
 	<parent>
 		<groupId>de.braintags</groupId>
 		<artifactId>btVertxBasePOM</artifactId>
-		<version>16-SNAPSHOT</version>
+		<version>16</version>
 	</parent>
 
 	<properties>
-		<netrelay.version>10.0.0-SNAPSHOT</netrelay.version>
-		<netrelayController.version>1.0.0-SNAPSHOT</netrelayController.version>
+		<netrelay.version>10.0.0</netrelay.version>
+		<netrelayController.version>1.0.0</netrelayController.version>
 		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.test.skip>false</maven.test.skip>
