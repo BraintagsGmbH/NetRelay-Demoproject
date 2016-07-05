@@ -20,7 +20,7 @@ node {
     	replaceTokens: false, targetLocation: 'settings.xml' ]]]) {
          sh "mvn -s settings.xml -Dsign.skip=true -DNetRelayPort=9898 -DstartMongoLocal=true -DlocalPort=27018  -Dconnection_string=mongodb://localhost:27018 clean deploy"
     	step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar', fingerprint: true])
-    	step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+    	// step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
     }
 
 
