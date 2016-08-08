@@ -32,15 +32,15 @@
  * <parent>
  *  <groupId>de.braintags</groupId>
  *  <artifactId>btVertxBasePOM</artifactId>
- *  <version>15-SNAPSHOT</version>
+ *  <version>19-SNAPSHOT</version> ( check for the latest version )
  * </parent>
  * ----
  *
  * add properties into the properties section:
  * [source,xml,subs="+attributes"]
  * ----
- * <netrelay.version>10.0.0-SNAPSHOT</netrelay.version>
- * <netrelayController.version>1.0.0-SNAPSHOT</netrelayController.version>
+ * <netrelay.version>10.2.0-SNAPSHOT</netrelay.version> ( check for the latest version )
+ * <netrelayController.version>1.2.0-SNAPSHOT</netrelayController.version> ( check for the latest version )
  * ----
  *
  * add dependencies for the core project NetRelay and for the NetRelay-Controller:
