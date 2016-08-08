@@ -35,4 +35,4 @@ hs_err_pid*
 
 *.iml
 /file-uploads/
-/webroot/
+/webroot/upload/
