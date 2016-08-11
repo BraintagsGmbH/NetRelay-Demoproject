@@ -920,7 +920,7 @@ form will be displayed, which is defined by the property "loginPage".
 The property "loginAction" defines the URL, where the authentication - the check for a valid user - is happening. It
 is important, that the value of the form action of the login-page and the value of this property are identic!
 The next, what we define is the way, how the authentication is processed. With the property "authProvider" we are
-defining, that `link:../../jsdoc/mongo_auth-MongoAuth.html[MongoAuth]` shall be used. Currently this is the only implemented
+defining, that `link:../../jsdoc/module-vertx-auth-mongo-js_mongo_auth-MongoAuth.html[MongoAuth]` shall be used. Currently this is the only implemented
 authprovider, others like JDBC etc. will follow.
 The property "collectionName" defines the collection or table to be used for authentication;
 the properties usernameField and passwordField define the fields in the collection, which shall be used to search for
