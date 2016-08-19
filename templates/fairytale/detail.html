@@ -11,7 +11,7 @@
 <body>
 	<div class="container">
 		<h3 class="overview">Edit fairytale</h3>
-		<form method="POST" th:action="'detail.html?entity=FairyTale&amp;action=UPDATE&amp;Id='+${fairytale.id}">
+		<form method="POST" th:action="'detail.html?entity=FairyTale{' + ${fairytale.id} '}&amp;action=UPDATE'">
 			<div class="form-group">
 				<label for="ft_id" class="control-label">ID</label> <input
 					id="ft_id" class="form-control" readonly="readonly"

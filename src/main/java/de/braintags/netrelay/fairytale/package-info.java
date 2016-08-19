@@ -235,7 +235,7 @@
  * In our example application we want to be able to create new fairytales, to list existing fairytales, to edit or
  * delete them. All those use cases are covered by the PersistenceController. +
  * The PersistenceController is the instance, which translates the parameters and data of a request into datastore
- * based actions. A request like "http://localhost/fairytale/detail?ID=5&entity=fairytale" will be interpreted by the
+ * based actions. A request like "http://localhost/fairytale/detail?entity=fairytale{ID:5}" will be interpreted by the
  * controller to fetch the fairytale with the id 5 from the datastore and to store it inside the context, so that it can
  * be displayed by a template engine.
  * The PersistenceController covers the most frequent use cases, so that the number of particular Controllers can be
@@ -296,10 +296,6 @@
  *     "captureDefinitions" : [ {
  *       "captureName" : "entity",
  *       "controllerKey" : "mapper",
- *       "required" : false
- *     }, {
- *       "captureName" : "ID",
- *       "controllerKey" : "ID",
  *       "required" : false
  *     }, {
  *       "captureName" : "action",
@@ -375,7 +371,7 @@
  * <body>
  *   <div class="container">
  * <h3 class="overview">Edit fairytale</h3>
- *     <form method="POST" th:action="'detail.html?entity=FairyTale&amp;action=UPDATE&amp;Id='+${fairytale.id}">
+ *     <form method="POST" th:action="'detail.html?entity=FairyTale{' + ${fairytale.id} '}&amp;action=UPDATE'">
  *       <div class="form-group">
  *         <label for="ft_id" class="control-label">ID</label>
  *         <input id="ft_id" class="form-control" readonly="readonly" name="FairyTale.id" th:value="${fairytale.id}" />
@@ -448,12 +444,12 @@
  * open the selected record in the detail page for editing. From now on you will have to add the entity parameter on a
  * call to this page.
  * 
- * NOTE: In the configuration of the PersistenceController we defined three parameters inside the capture section: ID,
+ * NOTE: In the configuration of the PersistenceController we defined two parameters inside the capture section:
  * action and entity. The definitions here are defining the possible parameters, the PersistenceController creates the
  * best fitting result in dependency to the real existing parameters in a request.
- * If the action is not set, for instance, it will be interpreted as DISPLAY. If the ID is set, then the one record with
- * this ID is used. If it is not set and the action is DISPLAY, then all records from the entity are fetched from the
- * datastore.
+ * If the action is not set, for instance, it will be interpreted as DISPLAY. If the ID is set as part of the entity,
+ * then the one record with this ID is used. If it is not set and the action is DISPLAY, then all records from the
+ * entity are fetched from the datastore.
  * 
  * === Deleting records
  * In the next step we will extend the record list by the ability to delete a selected record. Therefore a link will be
