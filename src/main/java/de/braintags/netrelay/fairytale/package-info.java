@@ -21,6 +21,8 @@
  * -DmailClientHost=mailClientHost +
  * -DmailClientPort=mailClientPort +
  * 
+ * TODO: Add documentation for launching under eclipse
+ * 
  * Launch the program and open link:localhost:8080[localhost:8080]
  * 
  * 
