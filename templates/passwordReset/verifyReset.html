@@ -1,0 +1,39 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Login page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body class="general"
+	th:with="m= ${context.get('authenticatable')}">
+	<div class="jumbotron">
+	<div class="container">
+		<h3>enter new password</h3>
+	</div>
+	</div>
+	<div class="container">
+		<div class="hidden">
+			DEBUG: registerError = <span th:text="${context.get('resetError')}"></span><br />
+			mailSendResult = <span th:text="${context.get('mailSendResult')}"></span>
+		</div>
+		<form
+			th:action="'/passwordReset/changePassword.html?entity=Member(id:' + ${m.id} + ')&amp;action=UPDATE'"
+			name="passwordLostForm" id="passwordLostForm" method="POST"
+			class="passwordLostForm">
+
+			<div class="form-group" id="passwortstrength">
+				<label for="newpassword" class="control-label">Neues
+					Passwort</label> <span class="pwstrength_viewport_progress"><input
+					type="password" name="Member.password" class="form-control"
+					id="newpassword" placeholder="Neues Passwort" /></span>
+			</div>
+			<button type="submit" class="btn btn-default">save password</button>
+		</form>
+	</div>
+</body>
+</html>
+

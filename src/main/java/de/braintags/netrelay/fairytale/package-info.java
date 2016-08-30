@@ -14,6 +14,8 @@
  * NOTE: The project assumes, that you have a MongoDb running, MySql will follow soon
  * 
  * == Quick-Quick start
+ * 
+ * 
  * If you find it useful: this project is ready to be run. Check it out and launch the class
  * de.braintags.netrelay.fairytale.MainWithKeyGenerator under vertx by adding the system properties: +
  * -DmailClientUserName=mailClientAccountName +
@@ -21,7 +23,9 @@
  * -DmailClientHost=mailClientHost +
  * -DmailClientPort=mailClientPort +
  * 
- * TODO: Add documentation for launching under eclipse
+ * === Launching inside an IDE
+ * To launch the project directly from eclipse, just use the launch configuration "Start DemoProject.launch" +
+ * For other IDEs: i'm sorry :-) Perhaps you can figure out and give me an update?
  * 
  * Launch the program and open link:localhost:8080[localhost:8080]
  * 
@@ -169,12 +173,12 @@
  * Controllers are the reusable, configurable entities which are building the logic of a NetRelay project.
  * Since our project shall process dynamic pages, we will add the ThymeleafTemplateController from the project
  * NetRelay-Controllers into the netrelay settings. Please make sure that you added the suitable dependency into the
- * build file of your project like described above.
- * Open the NetRelay-settings, which was the file "fairytale-settings.json" in our example above. The first part of the
- * file are server specific properties like the port for instance. The second part define the datastore to be used,
- * which we were editing before already. The next part are the routerdefinitions, where it is specified which
- * Controllers are used by our application and which controller is activated on which routes. This is the part, we are
- * interested now in. Locate the end of the block "routerdefinitions", which should be a definition with the name
+ * build file of your project like described above. +
+ * Open the NetRelay-settings, which is the file "fairytale-settings.json" in our example above. The first part of the
+ * file are server specific properties like the port for instance. The second part defines the datastore to be used,
+ * which we were editing before already. The next part are the router definitions, through them it is specified which
+ * controllers are used by our application and which controller is activated on which routes. This is the part, we are
+ * interested in, now. Locate the end of the block "routerdefinitions", which should be a definition with the name
  * "FailureDefinition".
  * Add a new entry behind this definition with the following content:
  * 
@@ -201,7 +205,7 @@
  * By adding this definition you are activating Thymeleaf as template engine. At the moment we are activating it on any
  * path, which is called. It is important to add the controller at the end of the definition list, because the
  * controllers are checked and executed in the order of this list and normally the TemplateController depends on the
- * result of some previously executed other controllers.
+ * result of some previously executed controllers.
  * 
  * 
  * == Launching the application
@@ -226,8 +230,8 @@
  * Before we are going to implement dynamic templates, we will take care of static resources, which we will need in the
  * later run. Add a new directory "webroot" into your project. Download the latest version of bootstrap from
  * link:http://getbootstrap.com/getting-started/#download[ the bootstrap download site ], extract it into the webroot
- * directory and rename the new subdirectory to "bootstrap". If you like, search or use a "favicon.ico" from the net and
- * store it into webroot.
+ * directory and rename the new subdirectory to "bootstrap". If you like, search or use a "favicon.ico" from the net for
+ * instance and store it into the directory "webroot".
  * 
  * NOTE: At this point we are preparing some contents, which are used by the controllers StaticController and
  * FaviconController, which are both defined by default inside the configuration of NetRelay. The bootstrap will be used
@@ -237,13 +241,13 @@
  * In our example application we want to be able to create new fairytales, to list existing fairytales, to edit or
  * delete them. All those use cases are covered by the PersistenceController. +
  * The PersistenceController is the instance, which translates the parameters and data of a request into datastore
- * based actions. A request like "http://localhost/fairytale/detail?entity=fairytale{ID:5}" will be interpreted by the
+ * based actions. A request like "http://localhost/fairytale/detail?entity=fairytale(ID:5)" will be interpreted by the
  * controller to fetch the fairytale with the id 5 from the datastore and to store it inside the context, so that it can
- * be displayed by a template engine.
- * The PersistenceController covers the most frequent use cases, so that the number of particular Controllers can be
+ * be displayed by a template engine. +
+ * The PersistenceController covers the most frequent use cases, so that the number of particular controllers can be
  * reduced to specialized implementations. On the other hand the PersistenceController shall not give the ability to
  * create uncontrollable datastore actions just by configuration, to force the creation of dedicated, well tested
- * controllers and to avoid unrecognized performace bottlenecks
+ * controllers and to avoid unrecognized performance bottlenecks
  * 
  * === Defining a mapper
  * In our example we want to create an area, where we are able to create, edit and delete FairyTales. A FairyTale at
@@ -257,7 +261,7 @@
  * 
  * === Declaring the mapper
  * Creating the mapper is not enough, we must declare it so, that NetRelay gets known about it. Therefore open the
- * settings of NetRelay, locate the section "mappingDefinitions" and add the entry into the mapperMap +
+ * settings of NetRelay, locate the section "mappingDefinitions" and add the following entry into the mapperMap +
  * 
  * `"FairyTale" : "de.braintags.netrelay.fairytale.model.FairyTale"`
  * 
@@ -273,13 +277,16 @@
  * ----
  * 
  * === Adding the setup for a PersistenceController
- * In the configuration of the PersistenceController we are defining where the Controller is used and how it shall
- * interprete the request. With the routes, we are activating the controller. With the definitions in the section
- * "captureCollection" we are defining the structure of the link and how it can be translated into a database action.
+ * In the configuration of the PersistenceController we are defining the pages, where the controller is used and how it
+ * shall interpret the request. With the routes, we are activating the controller for certain pages. With the
+ * definitions in the section "captureCollection" we are defining the structure of the link and how it can be translated
+ * into a database action. +
  * In our example in the first step we want to open the page "fairytales/index.html". There inside will be a form, by
  * which we will be able to create a new FairyTale. When pushing the submit button of the form, the new record shall be
- * written and displayed by the page "/fairytales/detail.html" - so we are adding this page into the route definition of
- * the PersistenceController. +
+ * written into the datastore and displayed by the page "/fairytales/detail.html". +
+ * That means, that the action to insert a new record into the datastore is executed by the template
+ * "/fairytales/detail.html" and because of that we are adding this page into the route definitions of the
+ * PersistenceController. +
  * 
  * [source, json]
  * ----
@@ -310,19 +317,12 @@
  * 
  * When the form is sent, the request will be something like "/fairytale/detail.html?entity=FairyTale&action=INSERT",
  * which shall advice the PersistenceController to create a new instance of FairyTale, fill it with the contents from
- * the sent form, save it as new instance in the datastore and put it into the context, so that it is available for a
- * template processor etc.
- * The PersistenceController knows several possible keys, which can be used to describe an action as a capture
- * definition, like "entity", "ID", "action" and some others. One capture definition gives the information, which
- * parameter has to be mapped into which key. In our example we are defining, that "entity" is mapped to "mapper", which
- * is the part of a link, which defines the mapper, where the database action has to be executed. +
- * 
- * NOTE: just for the case that you are asking why this translation exists: we are able to execute links like
- * `/fairytale/detail.html?entity=FairyTale&action=INSERT&entity2=FairyTale&action2=UPDATE&ID2=15`
- * either. More about CaptureCollections you can read in the base documentation of NetRelay under
- * link:https://github.com/BraintagsGmbH/NetRelay[NetRelay].
+ * the sent form, save it as new instance into the datastore and put it into the context, so that it is available for
+ * our template processor etc. +
+ * The part "captureCollection" will be explained more in detail below.
  * 
  * === Inserting records
+ * After the preparation of the configuration its time to create the needed templates.
  * Create a directory "fairytales" in "templates" and add the file "index.html" with the following content:
  * 
  * [source, html]
@@ -355,7 +355,7 @@
  * settings of the PersistenceController. Cause we want to create a new record, when sent, we define the action as
  * "INSERT".
  * As you can see in the input field, the name is defined as "FairyTale.name", which advices the PersistenceController
- * into which mapper and into which field the value of this field shall be saved.
+ * to store the value into the field name of the new Fairytale.
  * 
  * 
  * Next add the file "detail.html" into the same subdirectory with the content:
@@ -373,10 +373,15 @@
  * <body>
  *   <div class="container">
  * <h3 class="overview">Edit fairytale</h3>
- *     <form method="POST" th:action="'detail.html?entity=FairyTale{' + ${fairytale.id} '}&amp;action=UPDATE'">
+ *     <form method="POST" th:action="'detail.html?entity=FairyTale(id:' + ${fairytale.id} + ')&amp;action=UPDATE'"">
  *       <div class="form-group">
  *         <label for="ft_id" class="control-label">ID</label>
  *         <input id="ft_id" class="form-control" readonly="readonly" name="FairyTale.id" th:value="${fairytale.id}" />
+ *       </div>
+ *       <div class="form-group">
+ *         <label for="ft_id" class="control-label">last modified</label>
+ *         <input id="ft_id" class="form-control" readonly="readonly" name="FairyTale.modifiedOn" th:value=
+ *                "${fairytale.modifiedOn}" />
  *       </div>
  *       <div class="form-group">
  *         <label for="ft_name" class="control-label">Name</label>
@@ -403,7 +408,7 @@
  * Additionally the ID parameter is specified, so that the correct record is updated.
  * Launch the server now and call link:http://localhost:8080/fairytale/index.html
  * [http://localhost:8080/fairytale/index.html]. Enter a name in the form and push the submit button, which will lead
- * you to the page detail.html. Here you will be able now to edit the record and save it again.
+ * you to the page detail.html. Here you will now be able to edit the record and save it again.
  * 
  * === Creating a dynamic record list
  * In the start page of the fairytales we want to add now a list of existing records with the ability to open a record
@@ -413,20 +418,20 @@
  * [source, html]
  * ----
  * 
- * <div class="container">
+ * <div class="container"> *   
  * <h2 class="overview">List of fairytales</h2>
  * <table class="table table-striped table-bordered" cellspacing="0" width="100%">
  * <tr th:each="ft : ${ context.get( 'FairyTale') }">
  * <td th:text="${ft.id}"></td>
  * <td th:text="${ft.name}"></td>
- * <td><a th:href="'detail.html?entity=FairyTale&amp;action=DISPLAY&amp;Id='+${ft.id}">edit</a>
- * </td>
+ * <td><a th:href="'detail.html?entity=FairyTale(id:' + ${ft.id} + ')&amp;action=DISPLAY'"">edit</a>
+ *       </td>
  * </tr>
  * </table>
  * </div>
  * 
  * ----
- * This extension shall use an existing selection of FairyTale and will create per record one table row with a link to
+ * This extension shall use an existing selection of FairyTale and will create one table row per record with a link to
  * the detail page, so that it can be edited. To get that work, we have to put the page "/fairytale/index.html" under
  * the control of the PersistenceController, so that the selection is created. After the route definitions should look
  * like:
@@ -448,7 +453,7 @@
  * 
  * NOTE: In the configuration of the PersistenceController we defined two parameters inside the capture section:
  * action and entity. The definitions here are defining the possible parameters, the PersistenceController creates the
- * best fitting result in dependency to the real existing parameters in a request.
+ * best fitting result in dependency to the real existing parameters in a request. +
  * If the action is not set, for instance, it will be interpreted as DISPLAY. If the ID is set as part of the entity,
  * then the one record with this ID is used. If it is not set and the action is DISPLAY, then all records from the
  * entity are fetched from the datastore.
@@ -461,14 +466,17 @@
  * 
  * [source, html]
  * ----
- * <td><a th:href="'delete?entity=FairyTale&amp;action=DELETE&amp;Id='+${ft.id}">delete</a>
+ * <td><a th:href="'delete?entity=FairyTale(id:' + ${ft.id} + ')&amp;action=DELETE'">delete</a>
  * </td>
  * ----
- * If you are refreshing the page inside a browser now and click to the delete link, an error will occur, telling, that
- * the template "delete" does not exist. Additionally the choosen record is not deleted. To enable the full
- * functionality, we have to extend the configuration.
+ * Open the page
+ * link:http://localhost:8080/fairytale/index.html?entity=FairyTale[http://localhost:8080/fairytale/index.html?entity=
+ * FairyTale] again, in the record list you will find another link called "delete" +
+ * If you click to one delete link, an error will occur, telling, that the template "delete" does not exist.
+ * Additionally the choosen record is not deleted. To enable the full functionality, we have to extend the
+ * configuration.
  * 
- * First we we are adding the path "fairytale/delete" to the routelist of the PersistenceController:
+ * First we will add the path "fairytale/delete" to the routelist of the PersistenceController:
  * 
  * [source, json]
  * ----
@@ -494,9 +502,10 @@
  * page "/fairytale/index.html?entity=FairyTale" and that we don't want to append the parameters of the current request.
  * Restart the server now and call
  * link:http://localhost:8080/fairytale/index.html?entity=FairyTale[http://localhost:8080/fairytale/index.html?entity=
- * FairyTale] again. In the recordlist click to one delete entry. You will land on the same page - the list will be
- * reduced by the choosen record. With this scenario we created the virtual page "fairytale/delete", where no template
- * exists. The only sense of this page is to execute the persistence action "delete" and to redirect the user back.
+ * FairyTale] again. In the record list click to one delete entry. You will land on the same page - the list will be
+ * reduced by the chosen record. In this scenario we use the virtual page "fairytale/delete", wherefor no template
+ * exists. The only sense of this page is to execute the persistence action "delete" and to redirect the user back to
+ * the original page. That way we are preventing errors, which could occur in case the user would perform a refresh.
  * 
  * 
  * == Activating mail settings
@@ -513,13 +522,13 @@
  * 
  * == Adding protected areas
  * Lets say, that inside the project exists an area, where a user can edit his own data, like his name, password etc.
- * Thus we need the typical possiblities of member registration ( with double opt in ), login, password forgotten which
+ * Thus we need the typical possibilities of member registration ( with double opt in ), login, password forgotten which
  * we will implement now.
  * 
  * === Adding required mappers to the configuration
  * User information shall be stored into our MongoDb. To be able to work with records from a datastore, we have to
- * make the pojo mapper known for NetRelay.
- * In our example we are using the mapper class de.braintags.netrelay.model.Member from the project NetRelay-Connectors.
+ * make the pojo mapper known for NetRelay. +
+ * In our example we are using the mapper class de.braintags.netrelay.model.Member from the project NetRelay-Controller.
  * Open the settings file of NetRelay again and locate the section "mapperDefinitions", which you should find at the
  * bottom of the document. Inside the part "mapperMap" add the entry `"Member" : "de.braintags.netrelay.model.Member"`.
  * Afterwards this part should look like that:
@@ -535,22 +544,23 @@
  * 
  * ----
  * With this entry you are simply defining, that there exists a mapper with the reference name "Member", which is
- * pointing to the defined class. The mapper will be initialized by NetRelay and inside the underlaying datastore, when
+ * pointing to the defined class. The mapper will be initialized by NetRelay and inside the underlying datastore, when
  * it is needed.
  * 
  * 
  * 
  * === Adding the RegisterController
- * Before we are able to login into the restricted area, we must take care that there are existing valid userdata inside
+ * Before we are able to login into the restricted area, we must take care that there are existing valid user data
+ * inside
  * the system, which we can use for authentication. We could program that complete by defining the templates and the
- * handlers to put down as member and process the double-opt-in, or we are using the
- * {@link de.braintags.netrelay.controller.authentication.RegisterController}, which is buildt to structure this
- * process.
+ * handlers to put down as member and process the double-opt-in. Or we are using the
+ * {@link de.braintags.netrelay.controller.authentication.RegisterController}, which is built to structure this
+ * process in a reusable way.
  * 
  * ==== Creating the registration page
  * The registration page will have two tasks. First it can be opened by a user, who will fill in his user data and send
- * the form to create an account inside the system. If during this step an error occured, the same page will be called
- * again and the error is displayed on top of the form.
+ * the form to create an account inside the system. If during this step an error occurred, the same page will be called
+ * again and the error is displayed of top of the form. +
  * Create the file "registration.html" in directory "templates" and paste the following content:
  * 
  * [source, html]
@@ -602,6 +612,7 @@
  * 
  * ==== Adding the configuration
  * 
+ * Improve at that point, that the mailClientSettings are correct and point to an existing mail account.
  * Add the following configuration behind the SessionController:
  * 
  * [source, json]
@@ -611,7 +622,7 @@
  *   "routes" : [ "/doRegister","/verifyRegistration"],
  *   "controller" : "de.braintags.netrelay.controller.authentication.RegisterController",
  *   "handlerProperties" : {
- *     "regStartFailUrl" : "/registrationError.html",
+ *     "regStartFailUrl" : "/registration.html",
  *     "regStartSuccessUrl" : "/registrationSuccess.html",
  *     "regConfirmSuccessUrl" : "/confirmRegSuccess.html",
  *     "regConfirmFailUrl" : "/confirmRegFailure.html",
@@ -625,26 +636,31 @@
  * }
  * ----
  * 
- * First inside the configuration you are defining the property "authenticatableClass", which must be a Class, which
+ * Inside the configuration we are defining the property "authenticatableClass", which must be a Class, which
  * implements the interface {@link de.braintags.netrelay.model.IAuthenticatable}. Additionally the class, which we are
  * using here must be added into the mapper list like described above.
+ * 
  * The RegisterController is processed in two phases: +
- * First - after the user was sending the registration form - it is storing the user data temporary and sends a
- * confirmation mail to the email-address of the user. +
- * Second, when then the user clicked the confirmation link, the account is finalized and stored inside the server.
+ * The first phase is executed, when a user fills out and sends the registration form. If this is successfull, the
+ * registration data are stored temporary and a confirmation mail is sent to the email address of the user. +
+ * The second phase is executed, when the user clicks to the confirmation link. Through this phase the user account are
+ * finalized and saved into the datastore. +
+ * For both phases must be declared a success and a fail url, which will be called when the appropriate action succeeded
+ * or failed.
  * 
  * The routes, which are covered by the RegisterController, are the addresses of those two actions. The first action is
- * added as form action ( "/doRegister" ) inside the registration template and is called, when a user sends this form.
- * The second ( /verifyRegistration ) is contained inside the confirmation mail and is called, when a user clicks the
- * confirmation link.
+ * added as form action ( "/doRegister" ) inside the registration template and is called, when a user fills and sends
+ * this form. The second ( /verifyRegistration ) is contained as link inside the confirmation mail and is called, when a
+ * user clicks the confirmation link.
  * 
  * ==== The registration process
  * When a user fills out the registration form and clicks the send button, the first part of the registration can
  * succeed or can fail. The two properties "regStartFailUrl" and "regStartSuccessUrl" define the urls which are called
- * in those cases.
+ * in those cases. In our example configuration we were setting the regStartFailUrl to the page "/registration.html" and
+ * added the output of the error message to this template.
  * 
- * Simple example for a successful registration, which you should create as "registrationSuccess.html" inside the
- * templates directory:
+ * A simple example for a successful registration, which you should create as "registrationSuccess.html" inside the
+ * templates directory, could look like that:
  * 
  * [source, html]
  * ----
@@ -665,7 +681,7 @@
  *       <div>registration succeeded - we sent a confirmation message per email
  *     </div>
  *     <div class="hidden">
- *       DEBUG: registerError = <span th:text="${context.get('resetError')}"></span><br/>
+ *       DEBUG: registerError = <span th:text="${context.get('registerError')}"></span><br/>
  *       mailSendResult = <span th:text="${context.get('mailSendResult')}"></span>
  *     </div>
  *     </div>
@@ -673,8 +689,9 @@
  * </html>
  * ----
  * 
- * Simple example for a successless registration, which you should create as "registrationError.html" inside the
- * templates directory:
+ * If you want to use a separate error page for this step, here a simple example for a successless registration, which
+ * you should create as "registrationError.html" inside the templates directory and modify the configuration
+ * accordingly:
  * 
  * [source, html]
  * ----
@@ -779,10 +796,42 @@
  * </html>
  * ----
  * 
+ * ==== Executing the registration
+ * (Re)Launch the server and open the page
+ * link:http://localhost:8080/registration.html[http://localhost:8080/registration.html]. Inside the registration form
+ * add your data with a valid email address and push the button "register". As a result you will see the success page.
+ * Additionally you should receive a confiormation mail, which includes the confirmation link. When clicking to the
+ * link, the registration process is finalized and you should see the according page. +
+ * Try now to perform the registration process again or remove the mail client settings and restart the server. In both
+ * cases, after pushing the "register" button of the registration form, you should land on the same page, where an error
+ * message is displayed.
+ * 
  * === Creating the protected area
- * A user will be able to edit his data under the path /member/memberData.html. Therefor create a new directory and
- * file in "templates/member/memberData.html". The content of the file will follow later, for now it is enough, that the
- * directory and the file exist.
+ * A user will be able to edit his data under the path /member/memberData.html. Therefore create a new directory and
+ * file in "templates/member/memberData.html". Add some content to the file like:
+ * 
+ * 
+ * [source, html]
+ * ----
+ * <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+ *   <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+ *   <head>
+ *     <title>start page</title>
+ *     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ *     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+ *   </head>
+ *   <body>
+ *     <div class="jumbotron">
+ *       <div class="container">
+ * <h3>Fairytales: Member area</h3>
+ *       </div>
+ *     </div>
+ *     <div class="container">
+ *       coming: Member area
+ *     </div>
+ *   </body>
+ * </html>
+ * ----
  * 
  * === Creating the login template
  * If a user, who is not logged in, wants to enter a restricted area, he will be redirected to a page, where he can
@@ -827,13 +876,15 @@
  * </html>
  * ----
  * 
- * This template creates a login form with the two fields username and password, which will call the url "/member/login"
- * when sent. Behind this url we will soon implement the check for an existing user as authentication.
+ * This template creates a login form with the two fields username and password. When executed by a user, this form will
+ * call the url "/member/login". Behind this url we will soon implement the check for an existing user as
+ * authentication.
  * 
  * === Adding the AuthenticationController
  * All routes, which are covered by the AuthenticationController, are protected and require a valid login. The
  * AuthenticationController itself displays the login form with the page we created before, when it is required. The
- * configuration for our solution looks like that ( you must add this definition behind the SessionController ):
+ * configuration for our solution looks like that ( it is required to add this definition behind the SessionController
+ * ):
  * 
  * [source, json]
  * ----
@@ -859,20 +910,20 @@
  * As described above, all routes of the configuration are protected areas. So if you are starting the application now
  * and open the url link:http://localhost:8080/member/[member] you should see the login form inside the opened page
  * "login.html". If you enter now your userdata from the previously registered account, you should be able to enter the
- * protected page
- * .
+ * protected page.
+ * 
  * Although the AuthenticationController is quite complex and integrates several properties, the definition here is
- * quite simple to explain:
+ * quite simple to explain: +
  * If a user tries to enter a resticted area like "/member/memberData.html" and did not login before, then the login
- * form will be displayed, which is defined by the property "loginPage".
- * The property "loginAction" defines the URL, where the authentication - the check for a valid user - is happening. It
- * is important, that the value of the form action of the login-page and the value of this property are identic!
+ * form will be displayed, which is defined by the property "loginPage". The property "loginAction" defines the URL,
+ * where the authentication - the check for a valid user - is executed. It is important, that the value of the form
+ * action of the login-page and the value of this property are identic! +
  * The next, what we define is the way, how the authentication is processed. With the property "authProvider" we are
  * defining, that {@link io.vertx.ext.auth.mongo.MongoAuth} shall be used. Currently this is the only implemented
- * authprovider, others like JDBC etc. will follow.
+ * authprovider, others like JDBC etc. will follow. +
  * The property "collectionName" defines the collection or table to be used for authentication;
  * the properties usernameField and passwordField define the fields in the collection, which shall be used to search for
- * a suitable user for a username / password combination.
+ * a suitable user for a username / password combination. +
  * The fields of the login form are currently always named "username" and "password"
  * 
  * 
@@ -889,6 +940,17 @@
  * 
  * == Creating an own controller
  * 
+ * 
+ * == More details about PersistenceController and Captures
+ * The PersistenceController knows several possible keys, which can be used to describe an action as a capture
+ * definition, like "entity", "ID", "action" and some others. One capture definition gives the information, which
+ * parameter has to be mapped into which key. In our example we are defining, that "entity" is mapped to "mapper", which
+ * is the part of a link, which defines the mapper, where the database action has to be executed. +
+ * 
+ * NOTE: just for the case that you are asking why this translation exists: we are able to execute links like
+ * `/fairytale/detail.html?entity=FairyTale&action=INSERT&entity2=FairyTale&action2=UPDATE&ID2=15`
+ * either. More about CaptureCollections you can read in the base documentation of NetRelay under
+ * link:https://github.com/BraintagsGmbH/NetRelay[NetRelay].
  * 
  * 
  * [#launch]

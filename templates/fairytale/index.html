@@ -31,10 +31,10 @@
 				<td th:text="${ft.id}"></td>
 				<td th:text="${ft.name}"></td>
 				<td><a
-					th:href="'detail.html?entity=FairyTale&amp;action=DISPLAY&amp;Id='+${ft.id}">edit</a>
+					th:href="'detail.html?entity=FairyTale(id:' + ${ft.id} + ')&amp;action=DISPLAY'">edit</a>
 				</td>
 				<td><a
-					th:href="'delete?entity=FairyTale&amp;action=DELETE&amp;Id='+${ft.id}">delete</a>
+					th:href="'delete?entity=FairyTale(id:' + ${ft.id} + ')&amp;action=DELETE'">delete</a>
 				</td>
 			</tr>
 		</table>
