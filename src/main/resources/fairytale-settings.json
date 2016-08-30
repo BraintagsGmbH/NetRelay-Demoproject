@@ -73,7 +73,7 @@
       "captureCollection" : null
     }, {
       "name" : "PersistenceController",
-      "routes" : [ "/fairytale/index.html", "/fairytale/detail.html", "/fairytale/delete"  ],
+      "routes" : [ "/fairytale/index.html", "/fairytale/detail.html", "/fairytale/delete", "/passwordReset/changePassword.html"  ],
       "controller" : "de.braintags.netrelay.controller.persistence.PersistenceController",
       "handlerProperties" : {
         "mapperfactory" : "de.braintags.netrelay.mapping.NetRelayMapperFactory",
@@ -151,7 +151,7 @@
       "routes" : [ "/doRegister","/verifyRegistration"],
       "controller" : "de.braintags.netrelay.controller.authentication.RegisterController",
       "handlerProperties" : {
-        "regStartFailUrl" : "/registrationError.html",
+        "regStartFailUrl" : "/registration.html",
         "regStartSuccessUrl" : "/registrationSuccess.html",
         "regConfirmSuccessUrl" : "confirmRegSuccess.html",
         "regConfirmFailUrl" : "/confirmRegFailure.html",
@@ -162,7 +162,25 @@
         	"from" : "registration@braintags.de",
         	"subject": "fairytale registration: Email-confirmation"     	 
      	}
-    }, {
+    }, 
+    {
+      "name" : "PasswordLostController",
+      "routes" : [ "/passwordLost","/passwordReset"],
+      "controller" : "de.braintags.netrelay.controller.authentication.PasswordLostController",
+      "handlerProperties" : {
+        "pwLostFailUrl" : "/passwordReset/passwordLost.html",
+        "pwLostSuccessUrl" : "/passwordReset/confirmReset.html",
+        "pwResetSuccessUrl" : "/passwordReset/verifyReset.html",
+        "pwResetFailUrl" : "/passwordReset/failureReset.html",
+        "authenticatableClass" : "de.braintags.netrelay.model.Member",                          	
+        	"templateDirectory" : "templates",
+        	"template": "/mails/passwordLostEmail.html",
+        	"mode" : "XHTML",
+        	"from" : "registration@braintags.de",
+        	"subject": "password lost"
+     	}
+    },
+    {
       "name" : "ThymeleafTemplateController",
       "routes" : [ "/*" ],
       "blocking" : false,
@@ -192,9 +210,13 @@
     } ]
   },
   "mailClientSettings" : {
+    "hostname" : "mail.braintags.net",
+    "port" : 8025,
     "starttls" : "DISABLED",
     "login" : "NONE",
     "authMethods" : null,
+    "username" : "dev-test@braintags.net",
+    "password" : "thoo4ati",
     "ssl" : false,
     "trustAll" : false,
     "keyStore" : null,

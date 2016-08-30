@@ -929,16 +929,129 @@
  * 
  * === Adding the PasswordLostController
  * The PasswordLostController is very similar to the RegisterController and performs the process, if a user doesn't
- * remember his password.
- * tbc
+ * remember his password. In the process, the user first calls a page, where he can enter the email address of his
+ * account and activate the password lost process by submitting the form. The controller tries to find a valid account.
+ * If successfull, it will compose a mail, where a temporary link is contained. If an error occured inside this phase of
+ * the process, an error page is called. +
+ * When the user clicks to the temporary link inside the mail, the second phase is started. First the controller will
+ * verify, wether the reset link is still valid. If not, or another error occured, an error page is displayed. If the
+ * link is still successfull, the success page is called, where the user can add a new password, for instance.
  * 
- * == Rendering pdf
+ * ==== Adding the configuration
+ * 
+ * [source, json]
+ * ----
+ * {
+ *   "name" : "PasswordLostController",
+ *   "routes" : [ "/passwordLost","/passwordReset"],
+ *   "controller" : "de.braintags.netrelay.controller.authentication.PasswordLostController",
+ *   "handlerProperties" : {
+ *     "pwLostFailUrl" : "/passwordReset/passwordLost.html",
+ *     "pwLostSuccessUrl" : "/passwordReset/confirmReset.html",
+ *     "pwResetSuccessUrl" : "/passwordReset/verifyReset.html",
+ *     "pwResetFailUrl" : "/passwordReset/failureReset.html",
+ *     "authenticatableClass" : "de.braintags.netrelay.model.Member",
+ *     "templateDirectory" : "templates",
+ *     "template": "/mails/passwordLostEmail.html",
+ *     "mode" : "XHTML",
+ *     "from" : "registration@braintags.de",
+ *     "subject": "password lost"
+ *   }
+ * }
+ * 
+ * ----
+ * 
+ * The defined routes "passwordLost" and "passwordReset" define the two main actions of the controller.
+ * passwordLost searches a valid account and sends a reset mail. If successfull, it redirects to the template defined by
+ * property "pwLostSuccessUrl". If not, it will redirect to "pwLostFailUrl". +
+ * passwordReset validates the reset data behind the temporary link. If successfull, it will redirect to the template
+ * defined by property "pwResetSuccessUrl". If not, it will redirect to pwResetFailUrl"
+ * 
+ * ==== Creating the start template
+ * Create the directory "passwordReset" in templates and add the template "passwordLost.html" with the following
+ * content:
+ * 
+ * [source, html]
+ * ----
+ * <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+ * <html xmlns="http://www.w3.org/1999/xhtml"
+ * xmlns:th="http://www.thymeleaf.org">
+ *   <head>
+ *     <title>Login page</title>
+ *     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ *     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+ *   </head>
+ *   <body class="general">
+ *     <div class="jumbotron">
+ *       <div class="container">
+ *         
+ * <h3>password lost - please enter email address</h3>
+ *       </div>
+ *     </div>
+ *     <div class="container">
+ *       <div class="row" th:if="${context.get('resetError')}">
+ *         <div class="alert alert-danger" role="alert">
+ *           Error resetting password: (<span
+ *             th:text="${context.get('resetError')}"></span>)
+ *         </div>
+ *     </div>
+ *     <form action="/passwordLost" name="passwordLostForm"
+ *       id="passwordLostForm" method="POST" class="passwordLostForm">
+ *       <div class="form-group">
+ *         <label for="email">Email*</label> <input type="text"
+ *           class="form-control" id="email" name="email" placeholder="Email"
+ *           required="required" />
+ *       </div>
+ *       <button type="submit" class="btn btn-default">reset password</button>
+ *     </form>
+ *   </div>
+ * </body>
+ * </html>
+ * 
+ * ----
+ * 
+ * This template contains a form, where an email address must be entered. The form action calls the virtual page
+ * "/passwordLost", which executes the first phase of the process. Because this template is defined to be the error
+ * template of the first phase as well, an error view is added either.
+ * 
+ * ==== Creating the mail template
+ * The PasswordLostController sends an email with the link, to confirm the process. Add the file
+ * "passwordLostEmail.html" to the directory "mails" in templates with the following content:
+ * 
+ * [source, html]
+ * ----
+ * <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+ * <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+ * th:with=
+ * "host = 'http://'+${context.get('REQUEST_HOST')+(context.get('REQUEST_PORT')?':'+context.get('REQUEST_PORT'):'')}">
+ *   <head>
+ *     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ *   </head>
+ *   <body th:with="m = ${context.get('authenticatable')}">
+ *     dear <span th:text="${m.firstName}" th:remove="tag"></span>
+ *     <span th:text="${m.lastName}" th:remove="tag"></span>, the password reset link:
+ *       <a th:href="${host}+'/passwordReset?validationId='+${context.get('validationId')}"
+ *       target="_blank">RESET NOW</a>
+ *   </body>
+ * </html>
+ * 
+ * ----
+ * 
+ * ==== Executing the password lost process
+ * Open the page
+ * link:http://localhost:8080/passwordReset/passwordLost.html[http://localhost:8080/passwordReset/passwordLost.html],
+ * enter your email address and submit the form.
+ * 
  * 
  * 
  * == The failure definition
  * 
  * 
  * == Creating an own controller
+ * 
+ * 
+ * 
+ * == Authorization and permissions
  * 
  * 
  * == More details about PersistenceController and Captures
