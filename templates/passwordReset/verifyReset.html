@@ -16,10 +16,6 @@
 	</div>
 	</div>
 	<div class="container">
-		<div class="hidden">
-			DEBUG: registerError = <span th:text="${context.get('resetError')}"></span><br />
-			mailSendResult = <span th:text="${context.get('mailSendResult')}"></span>
-		</div>
 		<form
 			th:action="'/passwordReset/changePassword.html?entity=Member(id:' + ${m.id} + ')&amp;action=UPDATE'"
 			name="passwordLostForm" id="passwordLostForm" method="POST"

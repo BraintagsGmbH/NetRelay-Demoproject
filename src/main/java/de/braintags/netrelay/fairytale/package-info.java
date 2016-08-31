@@ -1037,21 +1037,207 @@
  * 
  * ----
  * 
+ * ==== Creating the confirmation template
+ * When the reset process could be successfully started, the template is called, which is defined by the property
+ * "pwLostSuccessUrl". Create the template "passwordReset/confirmReset.html" with the following content:
+ * 
+ * [source, html]
+ * ----
+ * <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd"> *
+ * <html xmlns="http://www.w3.org/1999/xhtml"
+ * xmlns:th="http://www.thymeleaf.org">
+ *   <head>
+ *     <title>registration success</title>
+ *     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ *     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+ *   </head>
+ *   <body class="registration">
+ *     <div class="jumbotron">
+ *       <div class="container">
+ *         
+ * <h3>successful password reset</h3>
+ *       </div>
+ *     </div>
+ *     <div class="container">
+ *       <div>We sent a message to your email address, which contains a link to reset the password.
+ *       </div>
+ *       <div class="hidden">
+ *         DEBUG: resetError = <span th:text="${context.get('resetError')}"></span><br/>
+ *         mailSendResult = <span th:text="${context.get('mailSendResult')}"></span>
+ *       </div>
+ *     </div>
+ *   </body>
+ * </html>
+ * ----
+ * 
+ * ==== Create the template to enter new password
+ * When a user clicks the verification link in the email, the controller validates the data. If successfull, it calls
+ * the template defined by the property "pwResetSuccessUrl". Therefor add "passwordReset/verifyReset.html" with the
+ * following content:
+ * 
+ * [source, html]
+ * ----
+ * <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd"> *
+ * <html xmlns="http://www.w3.org/1999/xhtml"
+ * xmlns:th="http://www.thymeleaf.org">
+ *   <head>
+ *     <title>Login page</title>
+ *     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ *     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+ *   </head>
+ * 
+ *   <body class="general" th:with="m= ${context.get('authenticatable')}">
+ *     <div class="jumbotron">
+ *       <div class="container">
+ *         
+ * <h3>enter new password</h3>
+ *       </div>
+ *     </div>
+ *     <div class="container">
+ *       <form
+ *         th:action="'/passwordReset/changePassword.html?entity=Member(id:' + ${m.id} + ')&amp;action=UPDATE'"
+ *         name="passwordLostForm" id="passwordLostForm" method="POST"
+ *         class="passwordLostForm">
+ * 
+ *       <div class="form-group" id="passwortstrength">
+ *         <label for="newpassword" class="control-label">new password</label>
+ * <span class="pwstrength_viewport_progress"><input
+ *             type="password" name="Member.password" class="form-control"
+ *             id="newpassword" placeholder="new password" /></span>
+ *       </div>
+ *       <button type="submit" class="btn btn-default">save password</button>
+ *     </form>
+ *   </div>
+ *   </body>
+ * </html>
+ * 
+ * ----
+ * 
+ * This template will give the user the ability to enter a new password. By submitting the form, the following template
+ * "/passwordReset/changePassword.html" is called. Add this path to the routings of the PersistenceController now,
+ * create the template with some simple content like "Your password was successfully changed".
+ * 
+ * 
+ * === Creating the failure template
+ * If an error occured, after the user clicked the verification link, the template is called, which is defined by the
+ * property "pwResetFailUrl" of the configuration. Add this template now with the following content:
+ * 
+ * [source, html]
+ * ----
+ * <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd"> *
+ * <html xmlns="http://www.w3.org/1999/xhtml"
+ * xmlns:th="http://www.thymeleaf.org">
+ *   <head>
+ *     <title>registration error</title>
+ *     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ *     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+ *   </head>
+ *   <body class="registration">
+ *     <div class="jumbotron">
+ *       <div class="container">
+ *         
+ * <h3>Error in reset</h3>
+ *       </div>
+ *     </div>
+ *     <div class="container">
+ *       <div th:if="${context.get('resetError') != null}" >
+ *         <div class="alert alert-danger" th:text="${context.get( 'resetError')}">
+ *         </div>
+ *       </div>
+ *     </div>
+ *   </body>
+ * </html>
+ * 
+ * ----
+ * 
  * ==== Executing the password lost process
  * Open the page
  * link:http://localhost:8080/passwordReset/passwordLost.html[http://localhost:8080/passwordReset/passwordLost.html],
- * enter your email address and submit the form.
- * 
- * 
- * 
- * == The failure definition
+ * enter your email address and submit the form. You should receive an email with the verification link. Click this link
+ * and follow the action.
  * 
  * 
  * == Creating an own controller
+ * Controllers are handlers, which shall be executed for one or more route definitions and are configured as part of the
+ * settings file. Creating a new controller is simply done by implementing
+ * {@link de.braintags.netrelay.controller.IController} or by extending
+ * {@link de.braintags.netrelay.controller.AbstractController}, for instance. +
+ * In our example here we will create a new controller, which will add the text "Hello world" into the context, from
+ * where it can be read from out of a template. The name of the variable in the context must set inside the
+ * configuration in the settings. +
  * 
+ * [source, java]
+ * ----
+ * {@link de.braintags.netrelay.fairytale.controller.HelloWorldController}
  * 
+ * ----
+ * 
+ * During the intialization of NetRelay the init method of a controller is called, which is defined inside the
+ * configuration. In our example we are reading the name, which shall be used to store the text "Hello world" into the
+ * context. +
+ * The method "handle" is called during runtime, when an url was called by the client, which shall activate the
+ * controller. In our example we are simply adding the text "Hello world" into the context.
+ * 
+ * Next we are adding the configuration into the settings. Please ensure, that this configuration is placed before the
+ * TemplateController. The corresponding configuration part from the settings looks like that:
+ * 
+ * [source, json]
+ * ----
+ * {
+ *   "name" : "HelloWorldController",
+ *   "controller" : "de.braintags.netrelay.fairytale.controller.HelloWorldController",
+ *   "active" : true,
+ *   "routes" : [ "/helloTemplate.html" ],
+ *   "blocking" : false,
+ *   "failureDefinition" : false,
+ *   "handlerProperties" : {
+ *     "helloProperty" : "HELLO"
+ *   }
+ * },
+ * 
+ * ----
+ * 
+ * Next, add the file "helloTemplate.html" into the template directory and add the following code:
+ * 
+ * [source, html]
+ * ----
+ * <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+ * <html xmlns="http://www.w3.org/1999/xhtml"
+ * xmlns:th="http://www.thymeleaf.org">
+ *   <head>
+ *     <title>registration error</title>
+ *     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ *     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+ *   </head>
+ *   <body >
+ *     <div class="jumbotron">
+ *       <div class="container">
+ *         
+ * <h3>Say it ...</h3>
+ *       </div>
+ *     </div>
+ *     <div class="container">
+ *       <div th:text="${context.get( 'HELLO')}">
+ *       </div>
+ *     </div>
+ *   </body>
+ * </html>
+ * 
+ * ----
+ * 
+ * Now, restart the server, call the link
+ * link:http://localhost:8080/helloTemplate.html[http://localhost:8080/helloTemplate.html] - you will see the dexpected
+ * result.
+ * 
+ * == The failure definition
+ * TODO
  * 
  * == Authorization and permissions
+ * TODO
+ * 
+ * == Linking subobjects
+ * TODO
+ * 
  * 
  * 
  * == More details about PersistenceController and Captures
