@@ -71,9 +71,21 @@
       "failureDefinition" : false,
       "handlerProperties" : { },
       "captureCollection" : null
-    }, {
+    }, 
+    {
+      "name" : "HelloWorldController",
+      "controller" : "de.braintags.netrelay.fairytale.controller.HelloWorldController",
+      "active" : true,
+      "routes" : [ "/helloTemplate.html"  ],
+      "blocking" : false,
+      "handlerProperties" : { 
+        "helloProperty" : "HELLO"
+      }
+    }, 
+    {
       "name" : "PersistenceController",
-      "routes" : [ "/fairytale/index.html", "/fairytale/detail.html", "/fairytale/delete", "/passwordReset/changePassword.html"  ],
+      "routes" : [ "/fairytale/index.html", "/fairytale/detail.html", 
+      	"/fairytale/delete", "/passwordReset/changePassword.html"  ],
       "controller" : "de.braintags.netrelay.controller.persistence.PersistenceController",
       "handlerProperties" : {
         "mapperfactory" : "de.braintags.netrelay.mapping.NetRelayMapperFactory",
@@ -210,13 +222,9 @@
     } ]
   },
   "mailClientSettings" : {
-    "hostname" : "mail.braintags.net",
-    "port" : 8025,
     "starttls" : "DISABLED",
     "login" : "NONE",
     "authMethods" : null,
-    "username" : "dev-test@braintags.net",
-    "password" : "thoo4ati",
     "ssl" : false,
     "trustAll" : false,
     "keyStore" : null,
