@@ -1205,7 +1205,7 @@
  * <html xmlns="http://www.w3.org/1999/xhtml"
  * xmlns:th="http://www.thymeleaf.org">
  *   <head>
- *     <title>registration error</title>
+ *     <title>hello</title>
  *     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
  *     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
  *   </head>
