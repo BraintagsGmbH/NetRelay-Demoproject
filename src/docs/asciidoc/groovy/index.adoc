@@ -1222,11 +1222,6 @@ public class HelloWorldController extends AbstractController {
   public static final String HELLO_PROPNAME = "helloProperty";
   private String propertyName;
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see io.vertx.core.Handler#handle(java.lang.Object)
-   */
   @Override
   public void handle(RoutingContext context) {
     LOGGER.info("adding to context under " + propertyName);
@@ -1234,11 +1229,6 @@ public class HelloWorldController extends AbstractController {
     context.next();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see de.braintags.netrelay.controller.AbstractController#initProperties(java.util.Properties)
-   */
   @Override
   public void initProperties(Properties properties) {
     LOGGER.info("init");
@@ -1283,7 +1273,7 @@ Next, add the file "helloTemplate.html" into the template directory and add the 
 <html xmlns="http://www.w3.org/1999/xhtml"
 xmlns:th="http://www.thymeleaf.org">
   <head>
-    <title>registration error</title>
+    <title>hello</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   </head>
@@ -1308,9 +1298,17 @@ link:http://localhost:8080/helloTemplate.html[http://localhost:8080/helloTemplat
 result.
 
 == The failure definition
-
+TODO
 
 == Authorization and permissions
+TODO
+
+== Linking subobjects
+TODO
+
+== Launching https
+TODO
+
 
 
 == More details about PersistenceController and Captures
