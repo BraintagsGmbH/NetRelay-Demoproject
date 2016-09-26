@@ -71,7 +71,19 @@
       "failureDefinition" : false,
       "handlerProperties" : { },
       "captureCollection" : null
-    }, 
+    },  {
+      "name" : "ElFinderController",
+      "controller" : "de.braintags.netrelay.controller.filemanager.elfinder.ElFinderController",
+      "active" : true,
+      "httpMethod" : null,
+      "routes" : [ "/fileManager/api"  ],
+      "blocking" : false,
+      "failureDefinition" : false,
+      "handlerProperties" : { 
+      	"rootDirectories" : "ROOTVOLUME:/Users/mremme/workspace/vertx/NetRelay-Controller/webroot"
+      },
+      "captureCollection" : null
+    },
     {
       "name" : "HelloWorldController",
       "controller" : "de.braintags.netrelay.fairytale.controller.HelloWorldController",
