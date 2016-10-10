@@ -15,7 +15,7 @@ public class HelloWorldController extends AbstractController {
   private String propertyName;
 
   @Override
-  public void handle(RoutingContext context) {
+  public void handleController(RoutingContext context) {
     LOGGER.info("adding to context under " + propertyName);
     context.put(propertyName, "Hello world");
     context.next();
