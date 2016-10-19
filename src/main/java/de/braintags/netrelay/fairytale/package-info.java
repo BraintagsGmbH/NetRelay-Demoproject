@@ -637,8 +637,8 @@
  * ----
  * 
  * Inside the configuration we are defining the property "authenticatableClass", which must be a Class, which
- * implements the interface {@link de.braintags.netrelay.model.IAuthenticatable}. Additionally the class, which we are
- * using here must be added into the mapper list like described above.
+ * implements the interface {@link de.braintags.vertx.auth.datastore.IAuthenticatable} . Additionally the class, which
+ * we are using here must be added into the mapper list like described above.
  * 
  * The RegisterController is processed in two phases: +
  * The first phase is executed, when a user fills out and sends the registration form. If this is successfull, the
