@@ -1,0 +1,11 @@
+apply from: 'gradle/vertx/vertxbase.gradle'
+
+dependencies {
+    compile group: 'de.braintags', name: 'netrelay', version:netrelayVersion
+    compile group: 'de.braintags', name: 'NetRelayController', version:netrelayControllerVersion
+    compile group: 'org.thymeleaf', name: 'thymeleaf', version:thymeleafVersion
+    compile group: 'log4j', name: 'log4j', version:'1.2.17'
+    compile group: 'org.xhtmlrenderer', name: 'flying-saucer-pdf-itext5', version:'9.0.7'
+
+    testCompile group: 'de.braintags', name: 'netrelay', version:netrelayVersion, classifier:'tests'
+}
