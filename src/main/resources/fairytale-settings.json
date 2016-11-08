@@ -76,7 +76,7 @@
       "controller" : "de.braintags.netrelay.controller.filemanager.elfinder.ElFinderController",
       "routes" : [ "/fileManager/api"  ],
       "handlerProperties" : { 
-      	"rootDirectories" : "ROOTVOLUME:/Users/mremme/workspace/vertx/NetRelay-Controller/webroot"
+      	"rootDirectories" : "ROOTVOLUME:webroot"
       }
     },
     {
