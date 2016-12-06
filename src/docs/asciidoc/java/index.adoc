@@ -281,12 +281,6 @@ date. Therefore we are creating our mapper in the subpackage "model" as followed
 
 [ source, java ]
 ----
-package de.braintags.netrelay.fairytale.model;
-
-import de.braintags.io.vertx.pojomapper.annotation.Entity;
-import de.braintags.netrelay.model.AbstractRecord;
-import io.vertx.docgen.Source;
-
 @Source(translate = false)
 @Entity
 public class FairyTale extends AbstractRecord {
@@ -294,7 +288,6 @@ public class FairyTale extends AbstractRecord {
   public String description;
 
 }
-
 ----
 
 === Declaring the mapper
@@ -1206,14 +1199,6 @@ configuration in the settings. +
 
 [source, java]
 ----
-package de.braintags.netrelay.fairytale.controller;
-
-import java.util.Properties;
-
-import de.braintags.netrelay.controller.AbstractController;
-import io.vertx.docgen.Source;
-import io.vertx.ext.web.RoutingContext;
-
 @Source(translate = false)
 public class HelloWorldController extends AbstractController {
   private static final io.vertx.core.logging.Logger LOGGER = io.vertx.core.logging.LoggerFactory
@@ -1236,7 +1221,6 @@ public class HelloWorldController extends AbstractController {
   }
 
 }
-
 
 ----
 

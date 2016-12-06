@@ -202,6 +202,8 @@
  * }
  * ----
  * 
+ * ADD DOCUMENTATION FOR REGEX IN ROUTERDEFINITION LIKE "regex:.*foo" will fit for any request ending with "foo"
+ * 
  * By adding this definition you are activating Thymeleaf as template engine. At the moment we are activating it on any
  * path, which is called. It is important to add the controller at the end of the definition list, because the
  * controllers are checked and executed in the order of this list and normally the TemplateController depends on the
