@@ -11,38 +11,34 @@
 	<parent>
 		<groupId>de.braintags</groupId>
 		<artifactId>btVertxBasePOM</artifactId>
-		<version>19-SNAPSHOT</version>
+		<version>20-SNAPSHOT</version>
 	</parent>
 
 	<properties>
-		<netrelay.version>10.2.0-SNAPSHOT</netrelay.version>
-		<netrelayController.version>1.2.0-SNAPSHOT</netrelayController.version>
-		<thymeleaf.version>3.0.1.RELEASE</thymeleaf.version>
-		
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.test.skip>false</maven.test.skip>
-		<doc.skip>false</doc.skip>
-		<source.skip>false</source.skip>
+		<jacoco.haltOnFailure>false</jacoco.haltOnFailure>
+		<ignoreFailedTests>true</ignoreFailedTests>
 		<testjar.skip>false</testjar.skip>
+		<doc.skip>false</doc.skip>
+		<maven.test.skip>false</maven.test.skip>
+		<source.skip>false</source.skip>
+		<maven.compiler.plugin>false</maven.compiler.plugin>
+		<sonar.skip>false</sonar.skip>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>de.braintags</groupId>
 			<artifactId>netrelay</artifactId>
-			<version>${netrelay.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>de.braintags</groupId>
 			<artifactId>NetRelayController</artifactId>
-			<version>${netrelayController.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>de.braintags</groupId>
 			<artifactId>netrelay</artifactId>
-			<version>${netrelay.version}</version>
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
@@ -56,7 +52,6 @@
 	    <dependency>
 	      <groupId>log4j</groupId>
 	      <artifactId>log4j</artifactId>
-	      <version>1.2.17</version>
 	      <scope>compile</scope>
 	    </dependency>
 	    

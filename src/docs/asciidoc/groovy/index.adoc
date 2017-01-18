@@ -68,7 +68,7 @@ add dependencies for the core project NetRelay and for the NetRelay-Controller:
 ----
 
 == Create the main verticle
-Create a new class MainVerticle, which extends `AbstractVerticle`. This will be the verticle,
+Create a new class MainVerticle, which extends `link:../../apidocs/io/vertx/core/AbstractVerticle.html[AbstractVerticle]`. This will be the verticle,
 which is used to start the application and to init two other verticles:
 
 * NetRelay
@@ -226,6 +226,8 @@ Add a new entry behind this definition with the following content:
   "captureCollection" : null
 }
 ----
+
+ADD DOCUMENTATION FOR REGEX IN ROUTERDEFINITION LIKE "regex:.*foo" will fit for any request ending with "foo"
 
 By adding this definition you are activating Thymeleaf as template engine. At the moment we are activating it on any
 path, which is called. It is important to add the controller at the end of the definition list, because the
@@ -544,10 +546,10 @@ One part of the NetRelay settings is the section mailClientSettings. You can def
 Additionally, if you don't want to add information about username, userpassword and host into the settings,
 then it is possible to define some System properties:
 
-* `link:todo[MailClientSettings.USERNAME_SYS_PROPERTY]` property name "mailClientUserName"
-* `link:todo[MailClientSettings.PASSWORD_SYS_PROPERTY]` property name "mailClientPassword"
-* `link:todo[MailClientSettings.HOST_SYS_PROPERTY]` property name "mailClientHost"
-* `link:todo[MailClientSettings.PORT_SYS_PROPERTY]` property name "mailClientPort"
+* `link:../../apidocs/de/braintags/netrelay/init/MailClientSettings.html#USERNAME_SYS_PROPERTY[MailClientSettings.USERNAME_SYS_PROPERTY]` property name "mailClientUserName"
+* `link:../../apidocs/de/braintags/netrelay/init/MailClientSettings.html#PASSWORD_SYS_PROPERTY[MailClientSettings.PASSWORD_SYS_PROPERTY]` property name "mailClientPassword"
+* `link:../../apidocs/de/braintags/netrelay/init/MailClientSettings.html#HOST_SYS_PROPERTY[MailClientSettings.HOST_SYS_PROPERTY]` property name "mailClientHost"
+* `link:../../apidocs/de/braintags/netrelay/init/MailClientSettings.html#PORT_SYS_PROPERTY[MailClientSettings.PORT_SYS_PROPERTY]` property name "mailClientPort"
 
 
 
@@ -585,7 +587,7 @@ Before we are able to login into the restricted area, we must take care that the
 inside
 the system, which we can use for authentication. We could program that complete by defining the templates and the
 handlers to put down as member and process the double-opt-in. Or we are using the
-`RegisterController`, which is built to structure this
+`link:../../apidocs/de/braintags/netrelay/controller/authentication/RegisterController.html[RegisterController]`, which is built to structure this
 process in a reusable way.
 
 ==== Creating the registration page
@@ -668,7 +670,7 @@ Add the following configuration behind the SessionController:
 ----
 
 Inside the configuration we are defining the property "authenticatableClass", which must be a Class, which
-implements the interface `IAuthenticatable` . Additionally the class, which
+implements the interface `link:../../apidocs/de/braintags/vertx/auth/datastore/IAuthenticatable.html[IAuthenticatable]` . Additionally the class, which
 we are using here must be added into the mapper list like described above.
 
 The RegisterController is processed in two phases: +
@@ -950,7 +952,7 @@ form will be displayed, which is defined by the property "loginPage". The proper
 where the authentication - the check for a valid user - is executed. It is important, that the value of the form
 action of the login-page and the value of this property are identic! +
 The next, what we define is the way, how the authentication is processed. With the property "authProvider" we are
-defining, that `link:../../groovydoc/io/vertx/groovy/ext/auth/mongo/MongoAuth.html[MongoAuth]` shall be used. Currently this is the only implemented
+defining, that `link:../../apidocs/io/vertx/ext/auth/mongo/MongoAuth.html[MongoAuth]` shall be used. Currently this is the only implemented
 authprovider, others like JDBC etc. will follow. +
 The property "collectionName" defines the collection or table to be used for authentication;
 the properties usernameField and passwordField define the fields in the collection, which shall be used to search for
@@ -1191,8 +1193,8 @@ and follow the action.
 == Creating an own controller
 Controllers are handlers, which shall be executed for one or more route definitions and are configured as part of the
 settings file. Creating a new controller is simply done by implementing
-`IController` or by extending
-`AbstractController`, for instance. +
+`link:../../apidocs/de/braintags/netrelay/controller/IController.html[IController]` or by extending
+`link:../../apidocs/de/braintags/netrelay/controller/AbstractController.html[AbstractController]`, for instance. +
 In our example here we will create a new controller, which will add the text "Hello world" into the context, from
 where it can be read from out of a template. The name of the variable in the context must set inside the
 configuration in the settings. +
