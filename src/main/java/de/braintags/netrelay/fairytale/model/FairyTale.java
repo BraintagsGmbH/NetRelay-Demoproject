@@ -12,7 +12,7 @@
  */
 package de.braintags.netrelay.fairytale.model;
 
-import de.braintags.io.vertx.pojomapper.annotation.Entity;
+import de.braintags.vertx.jomnigate.annotation.Entity;
 import de.braintags.netrelay.model.AbstractRecord;
 import io.vertx.docgen.Source;
 

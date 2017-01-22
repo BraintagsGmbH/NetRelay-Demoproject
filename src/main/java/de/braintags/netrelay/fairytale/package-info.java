@@ -127,7 +127,7 @@
  * When you launch the application, it will finish directly after displaying an exception inside the console:
  * 
  * ----
- * de.braintags.io.vertx.util.exception.InitException:
+ * de.braintags.vertx.util.exception.InitException:
  *    Settings file did not exist and was created new in path src/main/resources/fairytale-settings.json.
  *    NOTE: edit the file, set edited to true and restart the server
  *      at de.braintags.netrelay.init.Settings.loadSettings(Settings.java:182)
@@ -141,7 +141,7 @@
  * [source, json]
  * ----
  * "datastoreSettings" : {
- * "datastoreInit" : "de.braintags.io.vertx.pojomapper.mongo.init.MongoDataStoreInit",
+ * "datastoreInit" : "de.braintags.vertx.jomnigate.mongo.init.MongoDataStoreInit",
  *   "properties" : {
  *     "startMongoLocal" : "false",
  *     "handleReferencedRecursive" : "true",
@@ -156,10 +156,10 @@
  * generator verticle, which will be used to generate record identifyers:
  * 
  * ----
- * de.braintags.io.vertx.util.exception.InitException:
+ * de.braintags.vertx.util.exception.InitException:
  *   Settings file did not exist and was created new in path src/main/resources/KeyGeneratorSettings.json.
  *   NOTE: edit the file, set edited to true and restart the server
- *     at de.braintags.io.vertx.keygenerator.KeyGeneratorSettings.loadSettings(KeyGeneratorSettings.java:103)
+ *     at de.braintags.vertx.keygenerator.KeyGeneratorSettings.loadSettings(KeyGeneratorSettings.java:103)
  * 
  * ----
  * 
@@ -171,7 +171,7 @@
  * ----
  * {
  *   "edited" : true,
- *   "keyGeneratorClass" : "de.braintags.io.vertx.keygenerator.impl.MongoKeyGenerator",
+ *   "keyGeneratorClass" : "de.braintags.vertx.keygenerator.impl.MongoKeyGenerator",
  *   "generatorProperties" : {
  *     "db_name" : "KeygeneratoDb",
  *     "startMongoLocal" : "false",
