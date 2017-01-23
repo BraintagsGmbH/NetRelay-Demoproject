@@ -1,6 +1,6 @@
 {
   "edited" : true,
-  "keyGeneratorClass" : "de.braintags.io.vertx.keygenerator.impl.MongoKeyGenerator",
+  "keyGeneratorClass" : "de.braintags.vertx.keygenerator.impl.MongoKeyGenerator",
   "generatorProperties" : {
     "db_name" : "KeygeneratoDb",
     "startMongoLocal" : "false",

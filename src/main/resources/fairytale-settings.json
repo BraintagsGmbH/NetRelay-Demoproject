@@ -4,7 +4,7 @@
   "edited" : true,
   "defaultLoginPage" : "/backend/login.html",
   "datastoreSettings" : {
-    "datastoreInit" : "de.braintags.io.vertx.pojomapper.mongo.init.MongoDataStoreInit",
+    "datastoreInit" : "de.braintags.vertx.jomnigate.mongo.init.MongoDataStoreInit",
     "properties" : {
       "startMongoLocal" : "false",
       "handleReferencedRecursive" : "true",

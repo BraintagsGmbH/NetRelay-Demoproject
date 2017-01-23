@@ -4,7 +4,7 @@
   "edited" : true,
   "defaultLoginPage" : "/backend/login.html",
   "datastoreSettings" : {
-    "datastoreInit" : "de.braintags.io.vertx.pojomapper.mysql.init.MySqlDataStoreinit",
+    "datastoreInit" : "de.braintags.vertx.jomnigate.mysql.init.MySqlDataStoreinit",
     "properties" : {
       "host" : "localhost",
       "port" : "3306",
